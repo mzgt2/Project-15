@@ -5,7 +5,7 @@ class MoneyMachine:
     COIN_VALUES = {
         "quarters": 0.25,
         "dimes": 0.10,
-        "nickles": 0.05,
+        "nickels": 0.05,
         "pennies": 0.01
     }
 
@@ -20,8 +20,20 @@ class MoneyMachine:
     def process_coins(self):
         """Returns the total calculated from coins inserted."""
         print("Please insert coins.")
+        self.money_received = 0
         for coin in self.COIN_VALUES:
-            self.money_received += int(input(f"How many {coin}?: ")) * self.COIN_VALUES[coin]
+            while True:
+                try:
+                    count = int(input(f"How many {coin}?: "))
+                except ValueError:
+                    print("Please enter a whole number.")
+                    continue
+                if count < 0:
+                    print("Please enter 0 or more.")
+                    continue
+                break
+            self.money_received += count * self.COIN_VALUES[coin]
+        self.money_received = round(self.money_received, 2)
         return self.money_received
 
     def make_payment(self, cost):
