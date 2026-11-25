@@ -11,18 +11,17 @@ drinks = menu.get_items()
 while True:
 
 
-    choice = input(f"What would you like? {drinks} ")
-    beverage = menu.find_drink(choice)
+    choice = input(f"What would you like? {drinks} ").strip().lower()
     if choice == "report":
         coffee_maker.report()
         money_machine.report()
     elif choice == "off":
         exit()
-    elif choice in drinks:
-        enough = coffee_maker.is_resource_sufficient(beverage)
-        if enough:
-            result = money_machine.make_payment(beverage.cost)
-            if result:
-                coffee_maker.make_coffee(beverage)
     else:
-        print("Invalid input.")
+        beverage = menu.find_drink(choice)
+        if beverage:
+            enough = coffee_maker.is_resource_sufficient(beverage)
+            if enough:
+                result = money_machine.make_payment(beverage.cost)
+                if result:
+                    coffee_maker.make_coffee(beverag
